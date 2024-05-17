@@ -7,6 +7,8 @@ import Navbar from "~~/components/Course/Navbar";
 import Quiz from "~~/components/Course/Quiz";
 import Sidebar from "~~/components/Course/Sidebar";
 import Modal from "~~/components/global/Modal";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { Course, NFT } from "~~/types/types";
 
 const courses: Course[] = [{ id: 1, name: "DeFi Basics" }];
@@ -19,6 +21,12 @@ const nfts: NFT[] = [
 const Page = () => {
   const [currentView, setCurrentView] = useState("CourseMap");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { targetNetwork } = useTargetNetwork();
+  let contractName: any = "CriptoAventura";
+  if (targetNetwork.name !== "sepolia") {
+    contractName = "CriptoAventuraENS";
+  }
+  const { writeContractAsync: mintNFTAsync } = useScaffoldWriteContract(contractName);
 
   const handleCourseMapComplete = () => {
     setCurrentView("CourseSlide");
@@ -28,9 +36,23 @@ const Page = () => {
     setCurrentView("Quiz");
   };
 
-  const handleQuizComplete = () => {
-    setIsModalOpen(true);
+  const handleQuizComplete = async () => {
+    const nameResp = await fetch("https://random-data-api.com/api/name/random_name");
+    const data = await nameResp.json();
+    const name = data.name;
+    const dateEnd = Math.floor(new Date("2024-05-17").getTime() / 1000);
+    try {
+      await mintNFTAsync({
+        functionName: "mint",
+        args: [name, dateEnd, "1"],
+      } as never);
+    } catch (e) {
+      console.error("Error minting NFT:", e);
+    }
   };
+
+  // setIsModalOpen(true);
+  // };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);

@@ -12,18 +12,30 @@ const deployCriptoAventura: DeployFunction = async function (hre: HardhatRuntime
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const maxSuply = BigInt(1_000_000);
+  // Sepolia
+  if (hre.network.name === "sepolia") {
+    await deploy("CriptoAventuraENS", {
+      from: deployer,
+      log: true,
+      autoMine: true,
+    });
 
-  await deploy("CriptoAventura", {
-    from: deployer,
-    args: [maxSuply],
-    log: true,
-    autoMine: true,
-  });
+    const criptoAventura = await hre.ethers.getContract<Contract>("CriptoAventuraENS", deployer);
+    const contractMaxSupply = await criptoAventura.maxSupply();
+    console.log("CriptoAventuraENS Address: ", await criptoAventura.getAddress());
+    console.log("Total Supply NFTs: ", contractMaxSupply);
+  } else {
+    await deploy("CriptoAventura", {
+      from: deployer,
+      log: true,
+      autoMine: true,
+    });
 
-  const criptoAventura = await hre.ethers.getContract<Contract>("CriptoAventura", deployer);
-  const contractMaxSupply = await criptoAventura.maxSupply();
-  console.log("Total Supply NFTs: ", contractMaxSupply);
+    const criptoAventura = await hre.ethers.getContract<Contract>("CriptoAventura", deployer);
+    const contractMaxSupply = await criptoAventura.maxSupply();
+    console.log("CriptoAventura Address: ", await criptoAventura.getAddress());
+    console.log("Total Supply NFTs: ", contractMaxSupply);
+  }
 };
 
 export default deployCriptoAventura;
