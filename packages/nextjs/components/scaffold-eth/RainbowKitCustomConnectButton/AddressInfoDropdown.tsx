@@ -3,7 +3,7 @@ import { NetworkOptions } from "./NetworkOptions";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { getAddress } from "viem";
 import { Address } from "viem";
-import { useDisconnect } from "wagmi";
+import { useDisconnect, useEnsName } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
@@ -45,6 +45,10 @@ export const AddressInfoDropdown = ({
   };
   useOutsideClick(dropdownRef, closeDropdown);
 
+  const ensName: any = useEnsName({
+    address: address,
+  });
+
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
@@ -54,7 +58,11 @@ export const AddressInfoDropdown = ({
         >
           {/* <BlockieAvatar address={checkSumAddress} size={30} ensImage={ensAvatar} /> */}
           <span className="ml-2 mr-1 font-orbitron text-xl">
-            {isENS(displayName) ? displayName : checkSumAddress?.slice(0, 6) + "..." + checkSumAddress?.slice(-4)}
+            {isENS(ensName.data)
+              ? ensName.data
+              : isENS(displayName)
+              ? displayName
+              : checkSumAddress?.slice(0, 6) + "..." + checkSumAddress?.slice(-4)}
           </span>
           <ChevronDownIcon className="h-6 w-8 ml-2 sm:ml-0" />
         </summary>
