@@ -1,0 +1,64 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root,
+[data-theme] {
+  background: oklch(var(--b2));
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+
+}
+body, html{
+  margin: 0;
+  padding: 0;
+}
+
+.bodyBackground {
+  min-height: 100vh;
+  background: url("/assets/background.png") no-repeat center center;
+  background-size: 110%;
+  z-index: -1;
+}
+.backgroundLines {
+  min-height: 100vh;
+  background: url("/assets/bgLines.png") repeat center center;
+  background-size: 110%;
+  z-index: 2;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+.btn {
+  @apply shadow-md;
+}
+
+.btn.btn-ghost {
+  @apply shadow-none;
+}
+
+@keyframes floatAnimation {
+  0%, 100% {
+      transform: translateY(10px);
+  }
+  50% {
+      transform: translateY(-10px);
+  }
+}
+
+.float {
+  animation: floatAnimation 3s ease-in-out infinite;
+}

@@ -1,0 +1,8 @@
+.neon-border {
+    box-shadow: 0 0 8px #7000FF; /* Glow effect */
+}
+  
+  
+.neon-border:hover {
+    box-shadow: 0 0 30px #FF57F6;
+}
