@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Pentagon from "./Pentagon";
 
-function CourseMap() {
+function CourseMap({ onComplete }: { onComplete: () => void }) {
   return (
     <div className="h-full py-14 px-20 flex flex-col">
       <span className="font-orbitron text-base">Curso: Defi</span>
@@ -13,9 +13,11 @@ function CourseMap() {
         </div>
         <div className="grid grid-cols-6 gap-4">
           <div className="grid col-span-1"></div>
-          <Pentagon isActive style="node">
-            1
-          </Pentagon>
+          <div onClick={onComplete}>
+            <Pentagon isActive style="node">
+              1
+            </Pentagon>
+          </div>
           <Pentagon style="node">2</Pentagon>
           <Pentagon style="node">3</Pentagon>
           <Pentagon style="last-node">

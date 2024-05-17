@@ -25,7 +25,7 @@ const Pentagon = ({ children, isActive, style }: IPentagon) => {
     return (
       <div className="relative flex items-center justify-center">
         <div className="z-10">
-          <Image src={"/assets/course/pentagon-finish.svg"} height={130} width={130} alt="rocket" className=" mt-6" />
+          <Image src={"/assets/course/pentagon-finish.svg"} height={130} width={130} alt="rocket" className="mt-6" />
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-xl font-bold text-white">{children}</span>
           </div>
